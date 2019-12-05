@@ -9,7 +9,31 @@ import {
 } from 'react-native';
 
 const { width } = Dimensions.get('screen');
-export default class App extends Component {
+
+const FancyButton = props => {
+  return (
+    <TouchableOpacity
+      style={styles.fancyButton}
+      onPress={() => props.setItem([props.item], props.value)}>
+      <Text style={styles.label}>{props.text}</Text>
+    </TouchableOpacity>
+  )
+}
+
+const FancyInput = props => {
+  return (
+    <>
+      <Text style={styles.label}>{props.item}</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={value => props.setItem([props.item], value)}
+        value={props.value}
+      />
+    </>
+  );
+}
+
+class Container extends Component {
   constructor() {
     super();
     this.state = {
@@ -19,41 +43,37 @@ export default class App extends Component {
       email: ''
     };
   }
+
+  setItem(key, value) {
+    this.setState({ [key]: value })
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.label}>username</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={user => this.setState({ user })}
-          value={this.state.user}
-        />
-        <Text style={styles.label}>password</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={password => this.setState({ password })}
-          value={this.state.password}
-        />
-        {this.state.isCurrentUser ? (
-          <TouchableOpacity style={styles.fancyButton}>
-            <Text style={styles.label}>Log in</Text>
-          </TouchableOpacity>
-        ) : (
-            <React.Fragment>
-              <Text style={styles.label}>email</Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={email => this.setState({ email })}
-                value={this.state.email}
-              />
-              <TouchableOpacity style={styles.fancyButton}>
-                <Text style={styles.label}>Sign up</Text>
-              </TouchableOpacity>
-            </React.Fragment>
-          )}
+
+        <FancyInput item={'user'} value={this.state.user} setItem={this.setItem.bind(this)} />
+
+        <FancyInput item={'password'} value={this.state.password} setItem={this.setItem.bind(this)} />
+
+        {this.state.isCurrentUser ? <FancyButton text={'Log in'} /> : (
+          <>
+            <FancyInput item={'email'} value={this.state.email} setItem={this.setItem.bind(this)} />
+            <FancyButton text={'Sign Up'} />
+            <FancyButton text={'Sign in'} value={(this.state.isCurrentUser) ? false : true} item={'isCurrentUser'} setItem={this.setItem.bind(this)} />
+          </>
+        )}
       </View>
     );
   }
+}
+
+export default class App extends Component {
+
+  render() {
+    return <Container />
+  }
+
 }
 
 const styles = StyleSheet.create({
