@@ -13,9 +13,9 @@ const { width } = Dimensions.get('screen');
 const FancyButton = props => {
   return (
     <TouchableOpacity
-      style={styles.fancyButton}
+      style={(props.text === 'Log in') ? [styles.fancyButton, styles.loginButton] : styles.fancyButton}
       onPress={() => props.setItem([props.item], props.value)}>
-      <Text style={styles.label}>{props.text}</Text>
+      <Text style={styles.label} >{props.text}</Text>
     </TouchableOpacity>
   )
 }
@@ -28,9 +28,9 @@ const FancyInput = props => {
         style={styles.input}
         onChangeText={value => props.setItem([props.item], value)}
         value={props.value}
-      />
+      ></TextInput>
     </>
-  );
+  )
 }
 
 class Container extends Component {
@@ -51,16 +51,25 @@ class Container extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <FancyInput item={'user'}
+          value={this.state.user}
+          setItem={this.setItem.bind(this)} />
 
-        <FancyInput item={'user'} value={this.state.user} setItem={this.setItem.bind(this)} />
-
-        <FancyInput item={'password'} value={this.state.password} setItem={this.setItem.bind(this)} />
+        <FancyInput item={'password'}
+          value={this.state.password}
+          setItem={this.setItem.bind(this)} />
 
         {this.state.isCurrentUser ? <FancyButton text={'Log in'} /> : (
           <>
-            <FancyInput item={'email'} value={this.state.email} setItem={this.setItem.bind(this)} />
+            <FancyInput item={'email'}
+              value={this.state.email}
+              setItem={this.setItem.bind(this)}
+            />
             <FancyButton text={'Sign Up'} />
-            <FancyButton text={'Sign in'} value={(this.state.isCurrentUser) ? false : true} item={'isCurrentUser'} setItem={this.setItem.bind(this)} />
+            <FancyButton text={'Sign in'}
+              value={(this.state.isCurrentUser) ? false : true}
+              setItem={this.setItem.bind(this)}
+              item={'isCurrentUser'} />
           </>
         )}
       </View>
@@ -69,11 +78,9 @@ class Container extends Component {
 }
 
 export default class App extends Component {
-
   render() {
     return <Container />
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -102,5 +109,10 @@ const styles = StyleSheet.create({
     width,
     borderWidth: 1,
     borderColor: 'gray'
+  },
+  loginButton: {
+    backgroundColor: 'gray',
+    borderColor: 'lightblue',
+    borderBottomLeftRadius: 4
   }
 });
