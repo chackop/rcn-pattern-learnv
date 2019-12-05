@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Dimensions,
-  TouchableOpacity
-} from 'react-native';
+import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import styles from './AppStyle';
 
-const { width } = Dimensions.get('screen');
 
 const FancyButton = props => {
   return (
@@ -22,14 +15,14 @@ const FancyButton = props => {
 
 const FancyInput = props => {
   return (
-    <>
+    <React.Fragment>
       <Text style={styles.label}>{props.item}</Text>
       <TextInput
         style={styles.input}
         onChangeText={value => props.setItem([props.item], value)}
         value={props.value}
       ></TextInput>
-    </>
+    </React.Fragment>
   )
 }
 
@@ -49,6 +42,7 @@ class Container extends Component {
   }
 
   render() {
+
     return (
       <View style={styles.container}>
         <FancyInput item={'user'}
@@ -60,7 +54,7 @@ class Container extends Component {
           setItem={this.setItem.bind(this)} />
 
         {this.state.isCurrentUser ? <FancyButton text={'Log in'} /> : (
-          <>
+          <React.Fragment>
             <FancyInput item={'email'}
               value={this.state.email}
               setItem={this.setItem.bind(this)}
@@ -70,7 +64,7 @@ class Container extends Component {
               value={(this.state.isCurrentUser) ? false : true}
               setItem={this.setItem.bind(this)}
               item={'isCurrentUser'} />
-          </>
+          </React.Fragment>
         )}
       </View>
     );
@@ -83,36 +77,3 @@ export default class App extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    backgroundColor: '#F5FCFF'
-  },
-  label: {
-    fontSize: 20,
-    alignItems: 'center',
-    textAlign: 'center',
-    margin: 10
-  },
-  input: {
-    borderColor: 'gray',
-    borderWidth: 1,
-    width,
-    height: 45
-  },
-  fancyButton: {
-    marginTop: 10,
-    backgroundColor: 'lightblue',
-    borderBottomRightRadius: 4,
-    width,
-    borderWidth: 1,
-    borderColor: 'gray'
-  },
-  loginButton: {
-    backgroundColor: 'gray',
-    borderColor: 'lightblue',
-    borderBottomLeftRadius: 4
-  }
-});
