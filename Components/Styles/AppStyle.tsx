@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Buttons, Colors, Metrics } from './styles';
+import { Buttons, Colors, Metrics } from '../../styles';
 
 export default StyleSheet.create({
   container: {
@@ -9,7 +9,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.background
   },
   label: {
-    fontSize: 20, 
+    fontSize: 20,
     alignItems: 'center',
     textAlign: 'center',
     margin: 10

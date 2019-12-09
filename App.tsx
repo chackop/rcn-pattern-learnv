@@ -1,79 +1,32 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
-import styles from './AppStyle';
+import { createStackNavigator, createAppContainer, createBottomTabNavigator, createDrawerNavigator } from 'react-navigation';
+import HomeScreen from './Screens/HomeScreen';
+import DetailScreen from './Screens/DetailScreen';
+import SignUpScreen from './Screens/SignUpScreen';
 
 
-const FancyButton = props => {
-  return (
-    <TouchableOpacity
-      style={(props.text === 'Log in') ? [styles.fancyButton, styles.loginButton] : styles.fancyButton}
-      onPress={() => props.setItem([props.item], props.value)}>
-      <Text style={styles.label} >{props.text}</Text>
-    </TouchableOpacity>
-  )
-}
-
-const FancyInput = props => {
-  return (
-    <React.Fragment>
-      <Text style={styles.label}>{props.item}</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={value => props.setItem([props.item], value)}
-        value={props.value}
-      ></TextInput>
-    </React.Fragment>
-  )
-}
-
-class Container extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isCurrentUser: false,
-      user: '',
-      password: '',
-      email: ''
-    };
+const RootNavigator = createBottomTabNavigator(
+  {
+    Home: {
+      screen: HomeScreen,
+    },
+    SignUp: {
+      screen: SignUpScreen
+    },
+    Detail: {
+      screen: DetailScreen,
+    },
+  },
+  {
+    initialRouteName: 'SignUp',
+    headerMode: 'none',
   }
+);
 
-  setItem(key, value) {
-    this.setState({ [key]: value })
-  }
-
-  render() {
-
-    return (
-      <View style={styles.container}>
-        <FancyInput item={'user'}
-          value={this.state.user}
-          setItem={this.setItem.bind(this)} />
-
-        <FancyInput item={'password'}
-          value={this.state.password}
-          setItem={this.setItem.bind(this)} />
-
-        {this.state.isCurrentUser ? <FancyButton text={'Log in'} /> : (
-          <React.Fragment>
-            <FancyInput item={'email'}
-              value={this.state.email}
-              setItem={this.setItem.bind(this)}
-            />
-            <FancyButton text={'Sign Up'} />
-            <FancyButton text={'Sign in'}
-              value={(this.state.isCurrentUser) ? false : true}
-              setItem={this.setItem.bind(this)}
-              item={'isCurrentUser'} />
-          </React.Fragment>
-        )}
-      </View>
-    );
-  }
-}
+const AppContainer = createAppContainer(RootNavigator);
 
 export default class App extends Component {
   render() {
-    return <Container />
+    return <AppContainer />;
   }
 }
-
