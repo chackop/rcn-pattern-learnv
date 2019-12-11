@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, TextInput } from "react-native";
 import styles from "../Components/Styles/AppStyle";
 import { FancyButton } from "../Components/FancyButton";
 import { FancyInput } from "../Components/FancyInput";
-
 
 export default class SignUpScreen extends Component {
   constructor() {
@@ -17,10 +16,16 @@ export default class SignUpScreen extends Component {
   setItem(key, value) {
     this.setState({ [key]: value });
   }
- 
+
   render() {
     return (
       <View style={styles.container}>
+        {
+          React.cloneElement(<FancyInput />, {
+            item: "clonedUser",
+            value: "clonedUser"
+          })
+        }
         <FancyInput
           item={"user"}
           value={this.state.user}
@@ -39,14 +44,15 @@ export default class SignUpScreen extends Component {
           setItem={this.setItem.bind(this)}
         />
 
-        <FancyButton 
-          text={"Sign Up"}  
-          route={'SignUp'} 
+        <FancyButton
+          text={"Sign Up"}
+          route={'SignUp'}
           {...this.props} />
-          
-        <FancyButton 
-          text={"Sign in"}  
-          route={'Home'} 
+
+        <FancyButton
+          style={[styles.fancyButton, { backgroundColor: 'pink' }]}
+          text={"Sign in"}
+          route={'Home'}
           {...this.props} />
       </View>
     );
