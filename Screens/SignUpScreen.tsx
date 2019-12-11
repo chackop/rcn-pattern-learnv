@@ -28,7 +28,7 @@ export default class SignUpScreen extends Component {
             </UserContext.Consumer>
           </CommonForm>
 
-          <FancyButton text={"Sign Up"} route={"SignUp"} {...this.props} />
+          <FancyButton text={"Sign Up"} route={"Hook"} {...this.props} />
 
           <EntryProvider>
             <CustomView />

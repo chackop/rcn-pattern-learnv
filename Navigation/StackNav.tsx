@@ -1,4 +1,5 @@
 import SignUpScreen from "../Screens/SignUpScreen";
+import { HookScreen } from '../Screens/HookScreen';
 import { TabNav } from './TabNav';
 
 
@@ -11,6 +12,9 @@ export const StackNav = createStackNavigator(
     },
     SignUp: {
       screen: SignUpScreen
+    },
+    Hook: {
+      screen: HookScreen
     }
   },
   {
