@@ -1,8 +1,24 @@
-import React, { Component } from "react";
-import { View, TextInput } from "react-native";
+import React, { Component, Fragment } from "react";
+import { View, Text } from "react-native";
 import styles from "../Components/Styles/AppStyle";
 import { FancyButton } from "../Components/FancyButton";
 import { FancyInput } from "../Components/FancyInput";
+
+// fake state to be shared
+const showCloneConfig = {
+  display: true,
+  item: 'clonedUser',
+  value: 'showCloneConfigUser'
+};
+
+const DisplayClone = ({ showClone, children }) => (showClone.display) ? React.Children.only(children) : null;
+
+const TheClone = ({ item, value }) => (
+  <Fragment>
+    <Text> Text in clone </Text>
+    {React.cloneElement(<FancyInput />, { item, value })}
+  </Fragment>
+);
 
 export default class SignUpScreen extends Component {
   constructor() {
@@ -18,14 +34,14 @@ export default class SignUpScreen extends Component {
   }
 
   render() {
+
     return (
       <View style={styles.container}>
-        {
-          React.cloneElement(<FancyInput />, {
-            item: "clonedUser",
-            value: "clonedUser"
-          })
-        }
+
+        <DisplayClone showClone={showCloneConfig}>
+          <TheClone item={showCloneConfig.item} value={showCloneConfig.value} />
+        </DisplayClone>
+
         <FancyInput
           item={"user"}
           value={this.state.user}
