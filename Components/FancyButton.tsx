@@ -1,14 +1,15 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 import styles from "./Styles/AppStyle";
 
 import withNavigationPath from "./WithNav";
-import withStyle from "./WithStyle";
+import WithStyle from "./WithStyle";
 
 const button = props => (
-  <View style={props.setStyle}>
-    <Text style={styles.label}>{props.text}</Text>
-  </View>
+  <WithStyle
+    {...props}
+    render={text => <Text style={styles.label}>{text}</Text>}
+  />
 );
 
-export const FancyButton = withNavigationPath(withStyle(button));
+export const FancyButton = withNavigationPath(button);
